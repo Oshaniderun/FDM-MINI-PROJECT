@@ -1,0 +1,7 @@
+Diagnostic Class,Precision,Recall,F1-Score,Support (Test Count)
+No failure,0.9958246346555324,0.9886010362694301,0.9921996879875195,1930.0
+Heat Dissipation Failure,1.0,1.0,1.0,21.0
+Overstrain Failure,1.0,0.95,0.9743589743589743,20.0
+Power Failure,1.0,1.0,1.0,17.0
+Tool Wear Failure,0.19230769230769232,0.625,0.29411764705882354,8.0
+Random Failures,0.0,0.0,0.0,4.0

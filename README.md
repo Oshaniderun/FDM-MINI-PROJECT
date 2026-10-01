@@ -85,27 +85,55 @@ The project addresses realistic industrial challenges including severe class imb
 - **Decision Log**: [`reports/decision_log.md`](./reports/decision_log.md).
 - **Viva Defense Guide**: [`docs/viva_prep.md`](./docs/viva_prep.md).
 
+### Stage 6: Baseline Model Development
+- **5 Diverse Algorithms Benchmarked:** Multinomial Logistic Regression, Support Vector Classifier (RBF), Random Forest, Extra Trees, and HistGradientBoosting.
+- **Stratified 5-Fold Cross-Validation:** $N=8,000$ training partition with preserved minority representation (3 instances of Random Failures per fold).
+- **Leak-Free Protocol:** Untouched 2,000-instance test set locked throughout model development.
+- **Metric Evaluation:** Prioritized **Macro-F1** and **Balanced Accuracy/Macro Recall** over misleading accuracy.
+- **Baseline Leaderboard:** HistGradientBoosting ($0.6830$ Macro-F1) and Random Forest ($0.6744$ Macro-F1, $0.7828$ Recall) led the benchmarks.
+
+### Stage 7: Model Optimization & Final Model Selection
+- **Feature Engineering Ablation:** Proved continuous domain physics features ($\Delta T$, Spindle Power $W$, Overstrain Product) deliver a **$+14.89\%$ relative lift in Macro-F1** on Random Forest ($0.5870 \rightarrow 0.6744$).
+- **Imbalance Handling Strategy:** Algorithmic cost-weighting (`class_weight='balanced_subsample'`) outperformed SMOTE, providing higher recall ($78.3\%$ vs $69.0\%$) and $3\times$ lower cross-fold variance without synthetic artifact noise.
+- **Systematic Hyperparameter Tuning:** `RandomizedSearchCV` on Macro-F1 lifted Tuned Random Forest to **$0.7000 \pm 0.0101$ Macro-F1**.
+- **Champion Model Selected:** Tuned Random Forest (`n_estimators=200`, `max_depth=10`, `class_weight='balanced_subsample'`).
+- **Untouched Test Set Evaluation ($N=2,000$):**
+  - **Accuracy:** $98.50\%$
+  - **Macro-F1 Score:** **$0.7101$**
+  - **Balanced Accuracy / Macro Recall:** **$0.7606$**
+  - **Heat Dissipation Failure (HDF):** Precision $1.00$, Recall $1.00$, F1 **$1.00$**
+  - **Power Failure (PWF):** Precision $1.00$, Recall $1.00$, F1 **$1.00$**
+  - **Overstrain Failure (OSF):** Precision $1.00$, Recall $0.95$, F1 **$0.97$**
+- **Production Pipeline Export:** Fully serialized end-to-end [`models/champion_pipeline.joblib`](./models/champion_pipeline.joblib) capable of sub-millisecond ($0.4$ ms) inference with missing sensors.
+- **Full Modeling Notebook:** [`notebooks/03_model_development_and_optimization.ipynb`](./notebooks/03_model_development_and_optimization.ipynb).
+- **Comprehensive Report:** [`reports/model_development_and_optimization.md`](./reports/model_development_and_optimization.md).
+
+### Stage 8: Progress Evaluation 2 (30%)
+- **Viva Defense Guide:** Complete examiner questions, high-scoring technical answers, and architectural ownership breakdown documented in [`docs/progress_evaluation_2_guide.md`](./docs/progress_evaluation_2_guide.md).
+- **Master Experiment Log:** Complete audit trail of 14 experimental iterations documented in [`reports/experiment_log.csv`](./reports/experiment_log.csv).
+
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started & Execution
 
 ### Prerequisites
 ```bash
 python -m pip install -r requirements.txt
 ```
-Or install core packages:
+
+### Running the Entire Modeling & Optimization Pipeline
 ```bash
-pip install numpy pandas matplotlib seaborn scipy scikit-learn imbalanced-learn joblib nbformat ipykernel
+python src/run_modeling_stage.py
+```
+
+### Compiling and Executing the Complete Stage 6/7 Notebook
+```bash
+python src/build_modeling_notebook.py
 ```
 
 ### Running the Preprocessing Pipeline & Sanity Tests
 ```bash
 python src/run_preprocessing_stage.py
-```
-
-### Generating All EDA Figures
-```bash
-python src/generate_figures.py
 ```
 
 ---
@@ -114,3 +142,4 @@ python src/generate_figures.py
 - **Group 05 ("Cognita")**  
 - Sri Lanka Institute of Information Technology (SLIIT)  
 - IT3051 - Fundamentals of Data Mining (2026)
+

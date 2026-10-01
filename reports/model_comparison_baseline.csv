@@ -1,0 +1,6 @@
+Model,Macro F1,Macro F1 (Raw),Macro Recall,Macro Recall (Raw),Balanced Accuracy,Balanced Accuracy (Raw),Weighted F1,Macro Precision,Accuracy,Fit Time (s),Imbalance Strategy,Validation Strategy
+HistGradientBoosting,0.6830 ± 0.0313,0.6829968844216301,0.6825 ± 0.0318,0.6824632534925432,0.6825 ± 0.0318,0.6824632534925432,0.9889 ± 0.0017,0.6848 ± 0.0328,0.9895,2.85s,class_weight='balanced',Stratified 5-Fold CV
+Random Forest,0.6744 ± 0.0124,0.6744037328096925,0.7828 ± 0.0241,0.7827579295799343,0.7828 ± 0.0241,0.7827579295799343,0.9786 ± 0.0022,0.6349 ± 0.0210,0.9709,0.40s,class_weight='balanced',Stratified 5-Fold CV
+Extra Trees,0.5775 ± 0.0111,0.5775497799294108,0.7560 ± 0.0435,0.7559817668052746,0.7560 ± 0.0435,0.7559817668052746,0.9596 ± 0.0024,0.5026 ± 0.0150,0.9445,0.32s,class_weight='balanced',Stratified 5-Fold CV
+Support Vector Classifier,0.5489 ± 0.0132,0.548901441996085,0.8022 ± 0.0389,0.8022147389907968,0.8022 ± 0.0389,0.8022147389907968,0.8338 ± 0.0157,0.4933 ± 0.0154,0.7343,1.33s,class_weight='balanced',Stratified 5-Fold CV
+Logistic Regression,0.5045 ± 0.0204,0.5045426608289789,0.7975 ± 0.0262,0.7975235976651416,0.7975 ± 0.0262,0.7975235976651416,0.7353 ± 0.0277,0.4607 ± 0.0195,0.6016,0.48s,class_weight='balanced',Stratified 5-Fold CV

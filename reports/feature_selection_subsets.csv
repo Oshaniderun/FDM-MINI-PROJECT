@@ -1,0 +1,4 @@
+Feature Configuration,Feature Count,Macro F1,Macro F1 (Raw),Macro Recall,Balanced Accuracy,Weighted F1
+Top 10 Features,10,0.6815 ± 0.0085,0.6814899957414,0.7631 ± 0.0304,0.7631 ± 0.0304,0.9809
+Full Feature Set (23 features),23,0.6783 ± 0.0119,0.6782781735163146,0.7593 ± 0.0326,0.7593 ± 0.0326,0.9820
+Top 15 Features,15,0.6754 ± 0.0161,0.6753973184638596,0.7541 ± 0.0321,0.7541 ± 0.0321,0.9807

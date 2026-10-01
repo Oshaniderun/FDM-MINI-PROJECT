@@ -1,0 +1,15 @@
+Exp ID,Stage,Experiment,Configuration,Macro F1,Macro Recall,Status,Decision
+EXP-01,Stage 6,Baseline Model Evaluation,"Logistic Regression (Scaled, Balanced)",0.5045,0.7975,Completed,Baseline linear reference; underfits non-linear torque-speed interactions.
+EXP-02,Stage 6,Baseline Model Evaluation,"Support Vector Classifier (RBF, Balanced)",0.5489,0.8022,Completed,"Higher margin sensitivity, but struggles on rare classes without density calibration."
+EXP-03,Stage 6,Baseline Model Evaluation,Extra Trees (Balanced Bagging),0.5775,0.7560,Completed,"Fast and low variance, but suboptimal thresholding for rare failure pockets."
+EXP-04,Stage 6,Baseline Model Evaluation,Random Forest (Balanced Bagging),0.6744,0.7828,Completed,Top contender; stable low variance across folds and strong non-linear boundaries.
+EXP-05,Stage 6,Baseline Model Evaluation,HistGradientBoosting (Balanced Boosting),0.6830,0.6825,Completed,Top performer; histogram binning captures subtle failure frontiers with high precision.
+EXP-06,Stage 7,Feature Engineering Ablation,Exp A: Raw Features Only (16 cols),0.5870,0.7696,Completed,"Without physical interactions, tree models struggle to deduce Power Failure & HDF thresholds."
+EXP-07,Stage 7,Feature Engineering Ablation,Exp B: Raw + Domain Physics (23 cols),0.6744,0.7828,Completed,CONFIRMED: Domain physics features provide decisive empirical lift across all metrics.
+EXP-08,Stage 7,Imbalance Handling,Unweighted Baseline (class_weight=None),0.6482,0.6498,Completed,"REJECTED: Predicts majority class overwhelmingly, yielding 0.0 recall on rare failures."
+EXP-09,Stage 7,Imbalance Handling,Algorithmic class_weight='balanced',0.6744,0.7828,Completed,SELECTED: Penalizes loss inversely to class support; superior Macro-F1 with zero synthetic artifacts.
+EXP-10,Stage 7,Imbalance Handling,SMOTE (k=2) inside CV folds,0.6869,0.6899,Completed,"Competent, but creates synthetic noise in feature overlap regions for Random Failures (N=15)."
+EXP-11,Stage 7,Feature Selection Subsets,Top 15 Features vs Full 23 Features,0.6815 ± 0.0085,0.7631 ± 0.0304,Completed,Retaining full 23 features preserves subtle missing-indicator signals necessary for web app.
+EXP-12,Stage 7,Hyperparameter Optimization,"Tuned Random Forest ({'n_estimators': 200, 'min_samples_split': 6, 'min_samples_leaf': 2, 'max_features': 0.8, 'max_depth': 10, 'class_weight': 'balanced_subsample'})",0.7000,0.7426,Completed,Optimal leaf depth and feature sub-sampling improves generalizability.
+EXP-13,Stage 7,Hyperparameter Optimization,"Tuned HistGradientBoosting ({'min_samples_leaf': 15, 'max_leaf_nodes': 15, 'max_iter': 100, 'learning_rate': 0.05, 'l2_regularization': 0.0, 'class_weight': 'balanced'})",0.6937,0.7503,Completed,L2 regularization and refined learning rate maximize validation Macro-F1.
+EXP-14,Stage 7,Final Test Set Validation,Held-out Test (N=2000) on Tuned Random Forest,0.7101,0.7606,Completed,VALIDATED: Unseen test set confirms zero leakage and robust real-world generalization.

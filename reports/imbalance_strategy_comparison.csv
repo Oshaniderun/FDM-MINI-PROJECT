@@ -1,0 +1,4 @@
+Imbalance Strategy,Macro F1,Macro F1 (Raw),Macro Recall,Macro Recall (Raw),Balanced Accuracy,Weighted F1,Macro Precision,Fit Time (s)
+SMOTE (k=2) inside CV,0.6869 ± 0.0352,0.6869032978148603,0.6899 ± 0.0506,0.6899487973172478,0.6899 ± 0.0506,0.9806,0.6892,0.94s
+Class Weighting ('balanced'),0.6744 ± 0.0124,0.6744037328096925,0.7828 ± 0.0241,0.7827579295799343,0.7828 ± 0.0241,0.9786,0.6349,0.40s
+Unweighted Baseline,0.6482 ± 0.0088,0.648211024508119,0.6498 ± 0.0187,0.649784236187868,0.6498 ± 0.0187,0.9889,0.6489,0.38s
