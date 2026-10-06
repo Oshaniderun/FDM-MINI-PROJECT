@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predictive Maintenance Diagnostic System | AI4I-PMDI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="brand-badge">INDUSTRIAL ASSET HEALTH MONITORING</div>
+        <h1 class="system-title">Predictive Maintenance Diagnostic System</h1>
+        <p class="system-subtitle">
+          Real-time health assessment and breakdown prevention for CNC milling machinery. Input operational sensor telemetry to detect mechanical overstrain, thermal dissipation faults, and drive power anomalies before catastrophic machine failure occurs.
+        </p>
+      </div>
+      <div class="header-status-card" id="backendStatusCard">
+        <div class="status-indicator-dot" id="backendStatusDot"></div>
+        <div>
+          <div class="status-label">Diagnostic System</div>
+          <div class="status-value" id="backendStatusText">Connecting...</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="main-grid">
+      <!-- Left Column: Input Form & Presets -->
+      <section class="card input-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="card-icon">&#9881;</span>
+            <h2 class="card-title">Machine Telemetry Inputs</h2>
+          </div>
+          <span class="pill-badge">Telemetry Analysis</span>
+        </div>
+
+        <!-- Scenario Presets -->
+        <div class="presets-section">
+          <label class="section-label">Quick Scenario Presets</label>
+          <div class="preset-buttons-grid">
+            <button type="button" class="preset-btn" data-preset="normal">
+              <span class="preset-dot green"></span>Normal Operation
+            </button>
+            <button type="button" class="preset-btn" data-preset="power_failure">
+              <span class="preset-dot red"></span>Power Failure (PWF)
+            </button>
+            <button type="button" class="preset-btn" data-preset="heat_dissipation">
+              <span class="preset-dot red"></span>Heat Dissipation (HDF)
+            </button>
+            <button type="button" class="preset-btn" data-preset="overstrain">
+              <span class="preset-dot red"></span>Overstrain (OSF)
+            </button>
+            <button type="button" class="preset-btn" data-preset="tool_wear">
+              <span class="preset-dot amber"></span>Tool Wear (TWF)
+            </button>
+            <button type="button" class="preset-btn" data-preset="control_b_missing">
+              <span class="preset-dot blue"></span>Control B (Missing Data)
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Telemetry Form -->
+        <form id="telemetryForm" novalidate>
+          <!-- Machine Configuration -->
+          <div class="form-row two-cols">
+            <div class="form-group">
+              <label for="machineType" class="field-label">
+                Machine Variant Type <span class="required">*</span>
+              </label>
+              <select id="machineType" name="type" class="form-control" required>
+                <option value="L">Type L (Low Quality - 50%)</option>
+                <option value="M">Type M (Medium Quality - 30%)</option>
+                <option value="H">Type H (High Quality - 20%)</option>
+              </select>
+              <span class="field-hint">Milling cutter quality & power specification</span>
+            </div>
+
+            <div class="form-group">
+              <label for="controlMode" class="field-label">
+                Diagnostic Control Mode <span class="required">*</span>
+              </label>
+              <select id="controlMode" name="control" class="form-control" required>
+                <option value="A">Mode A (Temps & Speed Monitored)</option>
+                <option value="B">Mode B (Speed & Torque Monitored)</option>
+                <option value="C">Mode C (Torque & Tool Wear Monitored)</option>
+              </select>
+              <span class="field-hint">Sensor multiplexer routing condition</span>
+            </div>
+          </div>
+
+          <!-- Sensor Measurements -->
+          <div class="sensor-section-header">
+            <label class="section-label">Operating Sensor Measurements</label>
+            <span class="unmeasured-notice">Leave blank if sensor is unmeasured / disconnected</span>
+          </div>
+
+          <div class="form-row two-cols">
+            <div class="form-group">
+              <label for="airTemp" class="field-label">
+                Air Temperature (K)
+              </label>
+              <div class="input-with-unit">
+                <input
+                  type="number"
+                  step="0.1"
+                  min="280"
+                  max="340"
+                  id="airTemp"
+                  name="air_temperature_k"
+                  class="form-control"
+                  placeholder="e.g. 300.0"
+                />
+                <span class="unit-tag">K</span>
+              </div>
+              <span class="field-hint">Ambient temperature (280.0 – 340.0 K)</span>
+            </div>
+
+            <div class="form-group">
+              <label for="processTemp" class="field-label">
+                Process Temperature (K)
+              </label>
+              <div class="input-with-unit">
+                <input
+                  type="number"
+                  step="0.1"
+                  min="280"
+                  max="350"
+                  id="processTemp"
+                  name="process_temperature_k"
+                  class="form-control"
+                  placeholder="e.g. 310.0"
+                />
+                <span class="unit-tag">K</span>
+              </div>
+              <span class="field-hint">Internal milling chamber (280.0 – 350.0 K)</span>
+            </div>
+          </div>
+
+          <div class="form-row two-cols">
+            <div class="form-group">
+              <label for="rotSpeed" class="field-label">
+                Rotational Speed (RPM)
+              </label>
+              <div class="input-with-unit">
+                <input
+                  type="number"
+                  step="1"
+                  min="800"
+                  max="4000"
+                  id="rotSpeed"
+                  name="rotational_speed_rpm"
+                  class="form-control"
+                  placeholder="e.g. 1500"
+                />
+                <span class="unit-tag">rpm</span>
+              </div>
+              <span class="field-hint">Spindle angular velocity (800 – 4000 rpm)</span>
+            </div>
+
+            <div class="form-group">
+              <label for="torque" class="field-label">
+                Spindle Torque (Nm)
+              </label>
+              <div class="input-with-unit">
+                <input
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="150"
+                  id="torque"
+                  name="torque_nm"
+                  class="form-control"
+                  placeholder="e.g. 40.0"
+                />
+                <span class="unit-tag">Nm</span>
+              </div>
+              <span class="field-hint">Cutting tool resistance (0.0 – 150.0 Nm)</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="toolWear" class="field-label">
+              Cumulative Tool Wear (min)
+            </label>
+            <div class="input-with-unit">
+              <input
+                type="number"
+                step="1"
+                min="0"
+                max="350"
+                id="toolWear"
+                name="tool_wear_min"
+                class="form-control"
+                placeholder="e.g. 60"
+              />
+              <span class="unit-tag">min</span>
+            </div>
+            <span class="field-hint">Total cutter engagement time (0 – 350 min; failure threshold ~200+ min)</span>
+          </div>
+
+          <!-- Client-side Validation Alert Box -->
+          <div id="validationAlert" class="alert-box error hidden">
+            <span class="alert-icon">&#9888;</span>
+            <span id="validationMessage">Validation message goes here.</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="btnDiagnose">
+              <span class="btn-spinner hidden" id="diagnoseSpinner"></span>
+              <span id="btnDiagnoseText">&#9654; Run Diagnostic Analysis</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnReset">
+              &#8634; Reset Form
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right Column: Results & Health Indicators -->
+      <section class="card results-card" id="resultsSection">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="card-icon">&#128202;</span>
+            <h2 class="card-title">Diagnostic Results & Insights</h2>
+          </div>
+          <span class="pill-badge" id="resultsStatusPill">Awaiting Telemetry</span>
+        </div>
+
+        <!-- Initial Placeholder State -->
+        <div id="emptyResultsState" class="empty-state">
+          <div class="empty-icon">&#128736;</div>
+          <h3>No Telemetry Analyzed Yet</h3>
+          <p>
+            Select a preset scenario on the left or enter specific machine operating parameters, then click <strong>Run Diagnostic Analysis</strong>.
+          </p>
+        </div>
+
+        <!-- Diagnostic Response Container (Hidden until first prediction) -->
+        <div id="predictionDisplay" class="prediction-container hidden">
+          <!-- Primary Outcome Banner -->
+          <div class="outcome-banner" id="outcomeBanner">
+            <div class="outcome-icon-wrapper" id="outcomeIconWrapper">
+              <span id="outcomeIcon">&#10004;</span>
+            </div>
+            <div class="outcome-details">
+              <div class="outcome-caption" id="outcomeCaption">Predicted Operating Condition</div>
+              <h3 class="outcome-title" id="predictedClass">No failure</h3>
+              <div class="outcome-subtitle" id="predictedSeverity">Severity: Normal</div>
+            </div>
+            <div class="confidence-badge" id="confidenceBadge">
+              <span class="confidence-val" id="confidenceVal">98.5%</span>
+              <span class="confidence-label">Confidence</span>
+            </div>
+          </div>
+
+          <!-- Interpretation & Recommendation -->
+          <div class="info-card diagnosis-card">
+            <div class="info-card-header">
+              <span class="info-icon">&#128269;</span>
+              <h4>Engineering Diagnosis</h4>
+            </div>
+            <p id="diagnosisText" class="info-text">
+              Machine is operating safely within normal operating parameters.
+            </p>
+          </div>
+
+          <div class="info-card recommendation-card" id="recommendationCard">
+            <div class="info-card-header">
+              <span class="info-icon">&#128737;</span>
+              <h4>Recommended Action</h4>
+            </div>
+            <p id="recommendationText" class="info-text">
+              Clear machine for continuous operation.
+            </p>
+          </div>
+
+          <!-- Physics Interaction Features -->
+          <div class="physics-grid-section">
+            <label class="section-label">Real-Time Operational Stress &amp; Physics Indicators</label>
+            <div class="physics-grid">
+              <div class="physics-stat-card">
+                <div class="physics-label">Thermal Dissipation (&Delta;T)</div>
+                <div class="physics-value" id="valDeltaT">-- K</div>
+                <div class="physics-hint">&Delta;T = T<sub>proc</sub> - T<sub>air</sub> (&lt; 8.6 K triggers HDF)</div>
+              </div>
+
+              <div class="physics-stat-card">
+                <div class="physics-label">Spindle Mechanical Power</div>
+                <div class="physics-value" id="valMechPower">-- W</div>
+                <div class="physics-hint">P = &tau; &times; &omega; (Safe Operating Band: 3,500 – 9,000 W)</div>
+              </div>
+
+              <div class="physics-stat-card">
+                <div class="physics-label">Overstrain Product</div>
+                <div class="physics-value" id="valOverstrain">-- min&middot;Nm</div>
+                <div class="physics-hint">Tool Wear &times; Torque (Structural Load Factor)</div>
+              </div>
+
+              <div class="physics-stat-card">
+                <div class="physics-label">Telemetry Sensor Health</div>
+                <div class="physics-value" id="valMissingCount">0 / 5</div>
+                <div class="physics-hint">Missing channels auto-imputed from operational baselines</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Multiclass Probability Distribution -->
+          <div class="probabilities-section">
+            <label class="section-label">Diagnostic Probability Distribution</label>
+            <div class="probability-bars-container" id="probabilityBars">
+              <!-- Dynamically populated via app.js -->
+            </div>
+          </div>
+
+          <!-- Input Summary Echo -->
+          <div class="input-echo-section">
+            <label class="section-label">Operating Telemetry Snapshot</label>
+            <div class="input-echo-tags" id="inputEchoTags">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div>
+        <strong>Predictive Maintenance Diagnostic Suite</strong> &bull; Industrial Equipment Reliability System
+      </div>
+      <div>
+        Automated Machine Health Classification &bull; Early Failure Prevention
+      </div>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

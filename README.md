@@ -83,7 +83,7 @@ The project addresses realistic industrial challenges including severe class imb
 - **Exportable Pipeline**: Fitted and serialized [`models/preprocessor.joblib`](./models/preprocessor.joblib) capable of handling single-row inputs with `NaN` fields at inference.
 - **Full Notebook**: [`notebooks/02_preprocessing_feature_engineering.ipynb`](./notebooks/02_preprocessing_feature_engineering.ipynb).
 - **Decision Log**: [`reports/decision_log.md`](./reports/decision_log.md).
-- **Viva Defense Guide**: [`docs/viva_prep.md`](./docs/viva_prep.md).
+
 
 ### Stage 6: Baseline Model Development
 - **5 Diverse Algorithms Benchmarked:** Multinomial Logistic Regression, Support Vector Classifier (RBF), Random Forest, Extra Trees, and HistGradientBoosting.
@@ -108,9 +108,6 @@ The project addresses realistic industrial challenges including severe class imb
 - **Full Modeling Notebook:** [`notebooks/03_model_development_and_optimization.ipynb`](./notebooks/03_model_development_and_optimization.ipynb).
 - **Comprehensive Report:** [`reports/model_development_and_optimization.md`](./reports/model_development_and_optimization.md).
 
-### Stage 8: Progress Evaluation 2 (30%)
-- **Viva Defense Guide:** Complete examiner questions, high-scoring technical answers, and architectural ownership breakdown documented in [`docs/progress_evaluation_2_guide.md`](./docs/progress_evaluation_2_guide.md).
-- **Master Experiment Log:** Complete audit trail of 14 experimental iterations documented in [`reports/experiment_log.csv`](./reports/experiment_log.csv).
 
 ---
 
@@ -131,9 +128,22 @@ python src/run_modeling_stage.py
 python src/build_modeling_notebook.py
 ```
 
-### Running the Preprocessing Pipeline & Sanity Tests
+### Launching the Interactive Web Application & API (Stages 9 & 10)
 ```bash
-python src/run_preprocessing_stage.py
+python -m uvicorn backend.main:app --reload --port 8000
+```
+Once started, access:
+* **Interactive Web Dashboard:** `http://127.0.0.1:8000/`
+* **Interactive OpenAPI Swagger Docs:** `http://127.0.0.1:8000/docs`
+* **ReDoc API Documentation:** `http://127.0.0.1:8000/redoc`
+
+### Running Backend Unit & Live End-to-End Tests
+```bash
+# Automated backend tests (12 tests)
+pytest -v tests/test_backend.py
+
+# Live end-to-end integration tests (all presets & held-out test data)
+python tests/test_live_system.py
 ```
 
 ---
@@ -142,4 +152,5 @@ python src/run_preprocessing_stage.py
 - **Group 05 ("Cognita")**  
 - Sri Lanka Institute of Information Technology (SLIIT)  
 - IT3051 - Fundamentals of Data Mining (2026)
+
 
