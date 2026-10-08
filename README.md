@@ -150,7 +150,7 @@ python tests/test_live_system.py
 
 ## 👥 Authors
 - **Group 05 ("Cognita")**  
-- Sri Lanka Institute of Information Technology (SLIIT)  
+- Sri Lanka Institute of Information Technology(SLIIT)  
 - IT3051 - Fundamentals of Data Mining (2026)
 
 
