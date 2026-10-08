@@ -41,9 +41,12 @@ ENGINEERED_NUMERIC_COLS = [
 CATEGORICAL_COLS = ['Type', 'Control']
 
 
-def split_and_clean_data(raw_data_path: Union[str, Path],
-                         test_size: float = 0.2,
-                         random_state: int = 42) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, Dict]:
+def split_and_clean_data(
+    raw_data_path: Union[str, Path],
+    test_size: float = 0.2,
+    random_state: int = 42,
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, Dict]:
+
     """Cleans identifiers and performs strict Stratified Train/Test split.
     
     Drops:
