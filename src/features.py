@@ -28,11 +28,14 @@ class PhysicsFeatureEngineer(BaseEstimator, TransformerMixin):
     Can be used before or after numerical imputation.
     """
     
-    def __init__(self, air_temp_col="Air temperature (K)",
-                 proc_temp_col="Process temperature (K)",
-                 rot_speed_col="Rotational speed (rpm)",
-                 torque_col="Torque (Nm)",
-                 tool_wear_col="Tool wear (min)"):
+    def __init__(
+        self,
+        air_temp_col: str = "Air temperature (K)",
+        proc_temp_col: str = "Process temperature (K)",
+        rot_speed_col: str = "Rotational speed (rpm)",
+        torque_col: str = "Torque (Nm)",
+        tool_wear_col: str = "Tool wear (min)",
+    ) -> None:
         self.air_temp_col = air_temp_col
         self.proc_temp_col = proc_temp_col
         self.rot_speed_col = rot_speed_col
@@ -40,6 +43,7 @@ class PhysicsFeatureEngineer(BaseEstimator, TransformerMixin):
         self.tool_wear_col = tool_wear_col
         self.feature_names_in_ = None
         self.n_features_in_ = None
+
         
     def fit(self, X, y=None):
         """Fit transformer (stateless; stores input feature names)."""
