@@ -51,8 +51,6 @@ The project addresses realistic industrial challenges including severe class imb
 │   ├── decision_log.md                           # Evidence-backed decision log for viva defense
 │   ├── processed_data_summary.md                 # Summary of training and test splits
 │   └── figures/                                  # 10 High-resolution publication plots (.png)
-├── docs/
-│   └── viva_prep.md                              # 15+ Viva Q&As with empirical metrics & justifications
 ├── models/
 │   └── preprocessor.joblib                       # Fitted scikit-learn Pipeline for inference
 ├── Dataset proposal - 05_Cognita.pdf             # Group 05 official project proposal document
